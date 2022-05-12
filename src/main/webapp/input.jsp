@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
+  
+ <%
+ 
+ String birthPlace = (String) request.getParameter("birthPlace");
+ 
+ out.println(birthPlace);
+ 
+ %> 
 <!DOCTYPE html>
 <html>
 <head>
