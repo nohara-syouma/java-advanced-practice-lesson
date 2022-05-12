@@ -1,7 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%
-    // 必要な処理を記述してください。
+    /*
+    下記コメントを参考に、必要な処理を記述してください
+    */
+
+    // 入力値を取得
+    request.setCharacterEncoding("UTF-8");
+	String btn = request.getParameter("btn");
+
+    // リセットボタンを押した場合、
+    // セッションを破棄
+    if (btn != null && btn.equals("reset")) {
+        // セッションを破棄
+        session.invalidate();
+    }
 
 %>
 <!DOCTYPE html>
