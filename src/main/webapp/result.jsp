@@ -95,6 +95,7 @@ a.button {
     <p><%=result%></p>
   </div>
 
+  
   <p>
 
     <span>現在の登録ユーザー</span><br>

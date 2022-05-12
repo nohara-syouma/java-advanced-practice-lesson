@@ -27,6 +27,7 @@ body {
   padding:5px;
 }
 
+
 .result {
   background: #fffacd;
   display: inline-block;

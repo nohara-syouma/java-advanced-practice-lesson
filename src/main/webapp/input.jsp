@@ -32,6 +32,7 @@ body {
     margin: 5px;
 }
 
+
 .box label {
     display: inline-block;
     width: 90px;
