@@ -18,3 +18,4 @@ public class ClockApp implements App {
         return userName + "さん、こんにちは。現在は" + sdf.format(date) + "です。";
     }
 }
+
