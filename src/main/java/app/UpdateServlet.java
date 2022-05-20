@@ -1,4 +1,4 @@
-package app;
+package jp.co.axiz.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import jp.co.axiz.entity.Car;
 
 /**
  * Servlet implementation class StartAppServlet
@@ -39,7 +41,8 @@ public class UpdateServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      *      response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @SuppressWarnings("unchecked")
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     	/*
@@ -47,12 +50,19 @@ public class UpdateServlet extends HttpServlet {
          */
 
         // todo:入力値取得
-
+    	request.setCharacterEncoding("UTF-8");
+    	String bodyColor = request.getParameter("bodyColor");
+    	String speed = request.getParameter("speed");
+    	String btn = request.getParameter("btn");
 
         // todo:「最初に戻る」ボタンクリック時、「input.jsp」へ遷移
-
+    	if(btn.equals("back")) {
+    		request.getRequestDispatcher("input.jsp").forward(request, response);
+    		
+    	}
 
         // todo:数値項目の入力値を数値に変換
+    	int speedInt = Integer.parseInt(speed);
 
 
         // セッションを取得
@@ -71,19 +81,19 @@ public class UpdateServlet extends HttpServlet {
         // 最新の情報を使用して、新しくCarオブジェクトを作成する
         // (latestCarが保持している値を引数に指定する)
         // 現在はnullをセットしている
-        Car newCar = null;
+        Car newCar = new Car(latestCar.getCarName(),bodyColor,latestCar.getMaxSpeed(),speedInt);
 
         // todo:セッターを使って、車体の色(入力値)をセット
-
+        newCar.setBodyColor(bodyColor);
 
         // todo:セッターを使って、現在の速度(入力値)をセット
-
+        newCar.setSpeed(speedInt);
 
         // todo:historyListに、上で作成した変更後の情報を保持したオブジェクト(newCar)を追加
-
+        historyList.add(newCar);
 
         // todo:セッションに変更履歴情報(historyList)を登録
-
+        session.setAttribute("historyList", historyList);
 
         //セッションに最新情報を登録
         session.setAttribute("latestCar", newCar);

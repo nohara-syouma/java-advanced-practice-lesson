@@ -1,4 +1,4 @@
-package app;
+package jp.co.axiz.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import jp.co.axiz.entity.Car;
+import jp.co.axiz.util.Utility;
 
 /**
  * Servlet implementation class StartAppServlet
@@ -47,22 +50,34 @@ public class InputServlet extends HttpServlet {
          */
 
         // todo:入力値取得
+    	
+    	request.setCharacterEncoding("UTF-8");
 
+		String carName = request.getParameter("carName");
+		String bodyColor = request.getParameter("bodyColor");
+		String maxSpeed = request.getParameter("maxSpeed");
+		
+		String result = "未入力の項目があります"; 
 
         // todo:未入力チェック
         // (入力値の3つのうち、どれか一つでも未入力なら「input.jsp」へ戻る
         //  未入力かどうかの判定は、UtilityクラスのisNullOrEmptyメソッドを使用)
-
+		//Utility utility = new Utility();
+		if(Utility.isNullOrEmpty(carName) || Utility.isNullOrEmpty(bodyColor) || Utility.isNullOrEmpty(maxSpeed)) {
+			request.setAttribute("result", result);
+			request.getRequestDispatcher("input.jsp").forward(request, response);
+			
+		}
 
         // todo:数値に変換
         // (数値項目[最高速度]の入力値の値を数値に変換)
-
+		int maxSpeedInt = Integer.parseInt(maxSpeed);
 
         // todo:Carオブジェクト作成
         // 現在はnullをセットしている。Carオブジェクトを作成し、
         // フィールドに入力値をセットする。
-        Car car = null;
-
+        Car car = new Car(carName, bodyColor, maxSpeedInt);
+        System.out.println(car);
         // セッションを取得
         HttpSession session = request.getSession();
 
@@ -70,10 +85,12 @@ public class InputServlet extends HttpServlet {
         ArrayList<Car> historyList = new ArrayList<>();
 
         // todo:historyListに上で作成したCarオブジェクトを追加
-
+        historyList .add(car);
+        
+        System.out.println(historyList);
 
         // todo:セッションに変更履歴情報(historyList)を登録
-
+        session.setAttribute("historyList", historyList);
 
         //セッションに最新情報を登録
         session.setAttribute("latestCar", car);
