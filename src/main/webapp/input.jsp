@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,7 @@ body {
     <input type="text" name="productName">
     <br>
     <label>金額：</label>
-    <input type="number" name="price">
+    <input type="text" name="price">
     <br>
     <button type="submit">登録</button>
   </form>

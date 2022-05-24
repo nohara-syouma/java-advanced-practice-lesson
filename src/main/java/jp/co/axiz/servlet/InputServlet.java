@@ -48,11 +48,15 @@ public class InputServlet extends HttpServlet {
         // 「input.jsp」からの入力値取得
         request.setCharacterEncoding("UTF-8");
         String productName = request.getParameter("productName");
-        String priceStr = request.getParameter("prise");
+        String priceStr = request.getParameter("price");
+        
+        //System.out.println(productName);
 
         // 受け取った金額用の入力値を数値に変換
         // (戻り値がnullの場合は、未入力とみなす)
-        Integer price = Integer.parseInt(priceStr);
+        System.out.println(productName);
+        Integer price = Utility.checkAndParseInt(priceStr);
+        //System.out.println(price);
 
         // 入力値が未入力かどうかの判定を行う
         // (商品名はUtilityクラスのisNullOrEmptyメソッドを使い、
@@ -61,10 +65,12 @@ public class InputServlet extends HttpServlet {
         // 登録画面へ遷移する
         if (Utility.isNullOrEmpty(productName) || price == null) {
             request.setAttribute("result", "登録できません。入力内容を見直してください。");
+            //System.out.println(productName);
 
             request.getRequestDispatcher("input.jsp").forward(request, response);
             return;
         }
+        
 
         // セッションを取得
         HttpSession session = request.getSession();
@@ -77,9 +83,10 @@ public class InputServlet extends HttpServlet {
         if (productList == null) {
             productList = new ArrayList<>();
         }
-
+        System.out.println(productName);
         // productオブジェクトを作成し、入力値をセット
         Product product = new Product(null, productName, price);
+        System.out.println(product.getProductName());
 
         // productListに上記で作成したオブジェクトを追加
         productList.add(product);
